@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gerenciador de Veiculos</title>
+    </h:head>
+    <h:body>
+        <h:outputLabel id="lblProprietarios" value="Proprietarios:" />
+        <h:form id="frmProprietarios">
+            <h:inputText id="edtProprietario"
+                         value="#{proprietarioBean
+                                  .proprietarioCorrente
+                                  .nome}"/>
+            <h:commandButton id="btnSalvarProprietario"
+                             value="Salvar"
+                             action="#{proprietarioBean.salvar(carroBean)}"/>
+            <h:dataTable id="tableProprietarios" 
+                         value="#{proprietarioBean.proprietarios}" 
+                         var="proprietario"
+                         border="1">
+                <h:column>
+                    <f:facet name="header">
+                        Código
+                    </f:facet>    
+                    #{proprietario.codigo}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Nome
+                    </f:facet>                        
+                    #{proprietario.nome}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Alterar
+                    </f:facet>    
+
+                    <h:commandButton id="btnAlterarProprietario"
+                                     value="..."
+                                     action="#{proprietarioBean
+                                               .setProprietarioCorrente(
+                                               proprietario)}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Excluir
+                    </f:facet>    
+
+                    <h:commandButton id="btnExcluirProprietario"
+                                     value="..."
+                                     action="#{proprietarioBean.apagar(
+                                               proprietario)}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+        <h:form id="frmCarros">
+            <h:outputLabel id="lblCarros" value="Carros:" />
+            <h:selectOneMenu id="teste"
+                             value="#{carroBean.codigoProprietario}">
+                <f:selectItem itemLabel="-- Selecione --" 
+                              noSelectionOption="true"/>
+                <f:selectItems value="#{proprietarioBean.proprietarios}"
+                               var="p"
+                               itemValue="#{p.codigo}"
+                               itemLabel="#{p.nome}"/>
+            </h:selectOneMenu>            
+
+            <h:inputText id="edtPlaca"
+                         value="#{carroBean
+                                  .carroCorrente
+                                  .placa}"/>
+            <h:commandButton id="btnSalvarCarro"
+                             value="Salvar"
+                             action="#{carroBean.salvar()}"/>            
+
+
+            <h:dataTable id="tableCarros" 
+                         value="#{carroBean.carros}" 
+                         var="carro"
+                         border='1'>
+                <h:column>
+                    <f:facet name="header">
+                        Código
+                    </f:facet>
+                    #{carro.codigo}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Placa
+                    </f:facet>                    
+                    #{carro.placa}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Proprietário
+                    </f:facet>                    
+                    #{carro.proprietario}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Alterar
+                    </f:facet>    
+
+                    <h:commandButton id="btnExcluirAlterarCarro"
+                                     value="..."
+                                     action="#{carroBean
+                                               .setCarroCorrente(carro)}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Excluir
+                    </f:facet>    
+
+                    <h:commandButton id="btnExcluirCarro"
+                                     value="..."
+                                     action="#{carroBean.apagar(carro)}"/>
+                </h:column>                               
+            </h:dataTable>
+
+        </h:form>
+    </h:body>
+</html>
+
